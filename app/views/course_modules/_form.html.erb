@@ -1,0 +1,21 @@
+<%= form_with(model: [@course, @course_module], local: true) do |form| %>
+  <div style="margin-bottom: 20px;">
+    <%= form.label :title, "Título del módulo", style: "display: block; font-weight: 600; color: #2d3748; margin-bottom: 8px; font-size: 14px;" %>
+    <%= form.text_field :title, style: "width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 14px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :description, "Descripción corta", style: "display: block; font-weight: 600; color: #2d3748; margin-bottom: 8px; font-size: 14px;" %>
+    <%= form.text_area :description, rows: 3, style: "width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 14px;" %>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <%= form.label :video, "Sube tu archivo de video (MP4)", style: "display: block; font-weight: 600; color: #2d3748; margin-bottom: 8px; font-size: 14px;" %>
+    <%= form.file_field :video, accept: 'video/mp4', style: "width: 100%; padding: 10px; border: 1px solid #cbd5e0; border-radius: 6px; font-size: 14px; background: white;" %>
+  </div>
+
+  <div style="display: flex; justify-content: space-between; align-items: center;">
+    <%= link_to "Cancelar", course_path(@course), style: "color: #718096; text-decoration: none; font-size: 14px;" %>
+    <%= form.submit style: "background: #3182ce; color: white; border: none; padding: 10px 20px; border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 14px;" %>
+  </div>
+<% end %>

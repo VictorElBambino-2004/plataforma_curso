@@ -1,0 +1,42 @@
+<div style="max-width: 1000px; margin: 0 auto;">
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;">
+    <div>
+      <h1 style="font-size: 28px; font-weight: 700; color: #1a202c; margin-bottom: 8px; margin-top: 0;">Explora nuestros cursos</h1>
+      <p style="color: #718096; font-size: 16px; margin: 0;">Selecciona un curso para ver su contenido y módulos.</p>
+    </div>
+    <div>
+      <%= link_to "+ Nuevo Curso", new_course_path, style: "text-decoration: none; background: #3182ce; color: white; padding: 10px 18px; border-radius: 6px; font-size: 14px; font-weight: 600; display: inline-block;" %>
+    </div>
+  </div>
+
+  <% if @courses.any? %>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px;">
+      <% @courses.each do |course| %>
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); display: flex; flex-direction: column; justify-content: space-between;">
+          <div>
+            <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+              <h3 style="margin: 0; font-size: 18px; font-weight: 600; color: #2d3748;">
+                <%= link_to course.title, course_path(course), style: "text-decoration: none; color: #2b6cb0;" %>
+              </h3>
+              <div style="display: flex; gap: 10px; font-size: 13px;">
+                <%= link_to "Editar", edit_course_path(course), style: "color: #3182ce; text-decoration: none;" %>
+                <%= link_to "Eliminar", course_path(course), data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro de eliminar este curso y todos sus módulos?" }, style: "color: #e53e3e; text-decoration: none;" %>
+              </div>
+            </div>
+            <p style="color: #4a5568; font-size: 14px; line-height: 1.5; margin-bottom: 20px;">
+              <%= truncate(course.description, length: 100) %>
+            </p>
+          </div>
+          <div>
+            <%= link_to "Ver curso →", course_path(course), style: "text-decoration: none; background: #3182ce; color: white; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; display: inline-block;" %>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  <% else %>
+    <div style="background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 40px; text-align: center; color: #718096;">
+      <p style="font-size: 16px; margin-bottom: 15px;">Aún no hay cursos creados. ¡Empieza agregando uno nuevo!</p>
+      <%= link_to "Crear primer curso", new_course_path, style: "text-decoration: none; background: #3182ce; color: white; padding: 8px 16px; border-radius: 6px; font-size: 14px; font-weight: 500; display: inline-block;" %>
+    </div>
+  <% end %>
+</div>

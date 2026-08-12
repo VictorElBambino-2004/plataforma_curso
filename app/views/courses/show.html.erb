@@ -1,0 +1,63 @@
+<div style="max-width: 800px; margin: 0 auto; background: white; border: 1px solid #e2e8f0; border-radius: 8px; padding: 40px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+  
+  <div>
+    <%= link_to "← Volver al catálogo", courses_path, style: "text-decoration: none; color: #3182ce; font-size: 14px; font-weight: 500;" %>
+  </div>
+
+  <h1 style="font-size: 28px; font-weight: 700; color: #1a202c; margin-top: 20px; margin-bottom: 15px;"><%= @course.title %></h1>
+  
+  <p style="font-size: 16px; color: #4a5568; line-height: 1.6; margin-top: 0; margin-bottom: 30px;">
+    <%= @course.description %>
+  </p>
+
+  <hr style="border: none; border-top: 1px solid #e2e8f0; margin: 30px 0;">
+
+  <div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+      <h3 style="font-size: 20px; font-weight: 600; color: #2d3748; margin: 0;">Módulos del curso</h3>
+      <%= link_to "+ Nuevo Módulo", new_course_course_module_path(@course), style: "text-decoration: none; background: #3182ce; color: white; padding: 8px 14px; border-radius: 6px; font-size: 14px; font-weight: 500;" %>
+    </div>
+
+    <% if @course_modules.any? %>
+      <div style="display: flex; flex-direction: column; gap: 20px;">
+        <% @course_modules.each do |mod| %>
+          <div style="border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; background: #f8fafc;">
+            
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+              <h4 style="margin: 0; font-size: 16px; font-weight: 600; color: #2d3748;"><%= mod.title %></h4>
+              <div style="display: flex; gap: 10px; font-size: 13px;">
+                <%= link_to "Editar", edit_course_course_module_path(@course, mod), style: "color: #3182ce; text-decoration: none;" %>
+                <%= link_to "Eliminar", course_course_module_path(@course, mod), data: { turbo_method: :delete, turbo_confirm: "¿Estás seguro?" }, style: "color: #e53e3e; text-decoration: none;" %>
+              </div>
+            </div>
+            
+            <div style="display: flex; flex-direction: column; gap: 10px;">
+              <!-- Descripción del módulo -->
+              <p style="font-size: 14px; color: #4a5568; margin: 0; line-height: 1.5;">
+                <%= mod.description.present? ? mod.description : "Lección de introducción al tema principal de este módulo." %>
+              </p>
+
+              <!-- Reproductor en alta calidad con Active Storage -->
+              <div style="margin-top: 5px;">
+                <video width="640" controls style="max-width: 100%; border-radius: 6px; background: #000; outline: none; cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.1);">
+                  <% if mod.respond_to?(:video) && mod.video.attached? %>
+                    <source src="<%= url_for(mod.video) %>" type="video/mp4">
+                  <% elsif mod.respond_to?(:video_url) && mod.video_url.present? %>
+                    <source src="<%= mod.video_url %>" type="video/mp4">
+                  <% else %>
+                    <source src="https://www.w3schools.com/html/movie.mp4" type="video/mp4">
+                  <% end %>
+                  Tu navegador no soporta la reproducción de video.
+                </video>
+              </div>
+            </div>
+
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <p style="color: #718096; font-size: 14px; font-style: italic;">Este curso aún no tiene módulos agregados.</p>
+    <% end %>
+  </div>
+
+</div>
